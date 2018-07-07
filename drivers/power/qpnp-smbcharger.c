@@ -1782,7 +1782,7 @@ static int smbchg_set_usb_current_max(struct smbchg_chip *chip,
 				pr_err("Couldn't set CMD_IL rc = %d\n", rc);
 				goto out;
 			}
-			chip->usb_max_current_ma = 500;
+			chip->usb_max_current_ma = 800;
 		}
 		if (current_ma == CURRENT_900_MA) {
 			rc = smbchg_sec_masked_write(chip,
@@ -1907,7 +1907,7 @@ static int smbchg_set_fastchg_current_raw(struct smbchg_chip *chip,
 			dev_err(chip->dev, "Couldn't set %dmA rc=%d\n",
 					CURRENT_500_MA, rc);
 		else
-			chip->fastchg_current_ma = 500;
+			chip->fastchg_current_ma = 800;
 		return rc;
 	}
 
@@ -3140,7 +3140,7 @@ out:
 	return rc;
 }
 
-static int smbchg_ibat_ocp_threshold_ua = 4500000;
+static int smbchg_ibat_ocp_threshold_ua = 2800000;
 module_param(smbchg_ibat_ocp_threshold_ua, int, 0644);
 
 #define UCONV			1000000LL
@@ -7844,7 +7844,7 @@ err:
 }
 
 #define DEFAULT_VLED_MAX_UV		3500000
-#define DEFAULT_FCC_MA			2000
+#define DEFAULT_FCC_MA			2500
 static int smb_parse_dt(struct smbchg_chip *chip)
 {
 	int rc = 0, ocp_thresh = -EINVAL;
