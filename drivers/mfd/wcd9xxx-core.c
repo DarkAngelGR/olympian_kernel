@@ -1,4 +1,4 @@
-/* Copyright (c) 2011-2017, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2011-2018, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -1515,15 +1515,15 @@ static const struct intr_data intr_tbl_v4[] = {
 	{WCD9335_IRQ_MBHC_ELECT_INS_REM_DET, true},
 	{WCD9335_IRQ_MBHC_ELECT_INS_REM_LEG_DET, true},
 	{WCD9335_IRQ_FLL_LOCK_LOSS, false},
-	{WCD9335_IRQ_HPH_PA_CNPL_COMPLETE, false},
-	{WCD9335_IRQ_HPH_PA_CNPR_COMPLETE, false},
+	{WCD9335_IRQ_HPH_PA_CNPL_COMPLETE, true},
+	{WCD9335_IRQ_HPH_PA_CNPR_COMPLETE, true},
 	{WCD9335_IRQ_EAR_PA_CNP_COMPLETE, false},
 	{WCD9335_IRQ_LINE_PA1_CNP_COMPLETE, false},
 	{WCD9335_IRQ_LINE_PA2_CNP_COMPLETE, false},
 	{WCD9335_IRQ_LINE_PA3_CNP_COMPLETE, false},
 	{WCD9335_IRQ_LINE_PA4_CNP_COMPLETE, false},
-	{WCD9335_IRQ_HPH_PA_OCPL_FAULT, false},
-	{WCD9335_IRQ_HPH_PA_OCPR_FAULT, false},
+	{WCD9335_IRQ_HPH_PA_OCPL_FAULT, true},
+	{WCD9335_IRQ_HPH_PA_OCPR_FAULT, true},
 	{WCD9335_IRQ_EAR_PA_OCP_FAULT, false},
 	{WCD9335_IRQ_SOUNDWIRE, false},
 	{WCD9335_IRQ_VDD_DIG_RAMP_COMPLETE, false},
@@ -2881,6 +2881,8 @@ static struct wcd9xxx_pdata *wcd9xxx_populate_dt_pdata(struct device *dev)
 		else
 			pdata->cdc_variant = WCD9XXX;
 	}
+	pdata->wcd9xxx_mic_tristate = of_property_read_bool(dev->of_node,
+						 "qcom,wcd9xxx-mic-tristate");
 
 	return pdata;
 err:
