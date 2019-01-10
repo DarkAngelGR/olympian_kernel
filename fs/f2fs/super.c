@@ -1050,6 +1050,14 @@ static void f2fs_put_super(struct super_block *sb)
 
 	iput(sbi->node_inode);
 	iput(sbi->meta_inode);
+	sbi->meta_inode = NULL;
+
+	/*
+	 * iput() can update stat information, if f2fs_write_checkpoint()
+	 * above failed with error.
+	 */
+	f2fs_destroy_stats(sbi);
+	f2fs_sbi_list_del(sbi);
 
 	/* destroy f2fs internal modules */
 	destroy_node_manager(sbi);
@@ -2922,10 +2930,6 @@ try_onemore:
 		err = PTR_ERR(sbi->node_inode);
 		goto free_nm;
 	}
-
-	err = f2fs_build_stats(sbi);
-	if (err)
-		goto free_node_inode;
 
 	f2fs_sbi_list_add(sbi);
 
